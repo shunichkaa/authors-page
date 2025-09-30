@@ -19,10 +19,12 @@ const fetchMoreAuthors = () => {
     startingIndex += 8;
     endingIndex += 8;
 
-    displayAuthors(authorDataArr.slice(startingIndex, endingIndex));  if (authorDataArr.length <= endingIndex) {
+    displayAuthors(authorDataArr.slice(startingIndex, endingIndex));
+    if (authorDataArr.length <= endingIndex) {
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.textContent = "No more data to load";
     }
 };
-
 
 const displayAuthors = (authors) => {
     authors.forEach(({ author, image, url, bio }, index) => {
