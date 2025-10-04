@@ -1,56 +1,85 @@
-type Author = {
-  author: string;
-  image: string;
-  url: string;
-  bio: string;
+const forumLatest = "https://cdn.freecodecamp.org/curriculum/forum-latest/latest.json";
+const forumTopicUrl = "https://forum.freecodecamp.org/t/";
+const forumCategoryUrl = "https://forum.freecodecamp.org/c/";
+const avatarUrl = "https://sea1.discourse-cdn.com/freecodecamp";
+
+const postsContainer = document.getElementById("posts-container");
+
+const allCategories = {
+    299: { category: "Career Advice", className: "career" },
+    409: { category: "Project Feedback", className: "feedback" },
+    417: { category: "freeCodeCamp Support", className: "support" }
 };
 
-const authorContainer = document.querySelector<HTMLElement>('#author-container');
-const loadMoreBtn = document.querySelector<HTMLButtonElement>('#load-more-btn');
+const timeAgo = (time) => {
+    const currentTime = new Date();
+    const lastPost = new Date(time);
 
-let startingIndex = 0;
-let endingIndex = 8;
-let authorDataArr: Author[] = [];
+    const timeDifference = currentTime - lastPost;
+    const msPerMinute = 1000 * 60;
 
-fetch('https://cdn.freecodecamp.org/curriculum/news-author-page/authors.json')
-  .then((res) => res.json())
-  .then((data: Author[]) => {
-    authorDataArr = data;
-    displayAuthors(authorDataArr.slice(startingIndex, endingIndex));
-  })
-  .catch(() => {
-    if (authorContainer) {
-      authorContainer.innerHTML = '<p class="error-msg">There was an error loading the authors</p>';
+    const minutesAgo = Math.floor(timeDifference / msPerMinute);
+    const hoursAgo = Math.floor(minutesAgo / 60);
+    const daysAgo = Math.floor(hoursAgo / 24);
+
+    if (minutesAgo < 60) {
+        return `${minutesAgo}m ago`;
     }
-  });
 
-const fetchMoreAuthors = () => {
-  startingIndex += 8;
-  endingIndex += 8;
+    if (hoursAgo < 24) {
+        return `${hoursAgo}h ago`;
+    }
 
-  displayAuthors(authorDataArr.slice(startingIndex, endingIndex));
-  if (loadMoreBtn && authorDataArr.length <= endingIndex) {
-    loadMoreBtn.disabled = true;
-    loadMoreBtn.style.cursor = 'not-allowed';
-    loadMoreBtn.textContent = 'No more data to load';
-  }
+    return `${daysAgo}d ago`;
 };
 
-const displayAuthors = (authors: Author[]) => {
-  if (!authorContainer) return;
-  authors.forEach(({ author, image, url, bio }, index) => {
-    authorContainer.innerHTML += `
-    <div id="${index}" class="user-card">
-      <h2 class="author-name">${author}</h2>
-      <img class="user-img" src="${image}" alt="${author} avatar">
-      <div class="purple-divider"></div>
-      <p class="bio">${bio.length > 50 ? bio.slice(0, 50) + '...' : bio}</p>
-      <a class="author-link" href="${url}" target="_blank">${author} author page</a>
-    </div>
-  `;
-  });
+const viewCount = (views) => {
+    const thousands = Math.floor(views / 1000);
+
+    if (views >= 1000) {
+        return `${thousands}k`;
+    }
+
+    return views;
 };
 
-if (loadMoreBtn) {
-  loadMoreBtn.addEventListener('click', fetchMoreAuthors);
-}
+const fetchData = async () => {
+    try {
+        const res = await fetch(forumLatest);
+        const data = await res.json();
+        showLatestPosts(data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+fetchData();
+
+const showLatestPosts = (data) => {
+    const { topic_list, users } = data;
+    const { topics } = topic_list;
+
+    postsContainer.innerHTML = topics.map((item) => {
+        const {
+            id,
+            title,
+            views,
+            posts_count,
+            slug,
+            posters,
+            category_id,
+            bumped_at,
+        } = item;
+
+        return `
+    <tr>
+      <td>
+        <p class="post-title">${title}</p>
+      </td>
+      <td></td>
+      <td>${posts_count - 1}</td>
+      <td>${viewCount(views)}</td>
+      <td>${timeAgo(bumped_at)}</td>
+    </tr>`;
+    }).join("");
+};
