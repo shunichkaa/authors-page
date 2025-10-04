@@ -5,68 +5,151 @@
 }
 
 :root {
-    --main-bg-color: #1b1b32;
+    --main-bg-color: #2a2a40;
+    --black: #000;
+    --dark-navy: #0a0a23;
+    --dark-grey: #d0d0d5;
+    --medium-grey: #dfdfe2;
     --light-grey: #f5f6f7;
-    --dark-purple: #5a01a7;
-    --golden-yellow: #feac32;
+    --peach: #f28373;
+    --salmon-color: #f0aea9;
+    --light-blue: #8bd9f6;
+    --light-orange: #f8b172;
+    --light-green: #93cb5b;
+    --golden-yellow: #f1ba33;
+    --gold: #f9aa23;
+    --green: #6bca6b;
 }
 
 body {
     background-color: var(--main-bg-color);
-    text-align: center;
+}
+
+nav {
+    background-color: var(--dark-navy);
+    padding: 10px 0;
+}
+
+.fcc-logo {
+    width: 210px;
+    display: block;
+    margin: auto;
 }
 
 .title {
+    margin: 25px 0;
+    text-align: center;
     color: var(--light-grey);
-    margin: 20px 0;
 }
 
-#author-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.table-wrapper {
+    padding: 0 25px;
+    overflow-x: auto;
 }
 
-.user-card {
-    border-radius: 15px;
-    width: 300px;
-    height: 350px;
-    background-color: var(--light-grey);
-    margin: 20px;
-}
-
-.user-img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-}
-
-.purple-divider {
-    background-color: var(--dark-purple);
+table {
     width: 100%;
-    height: 15px;
+    color: var(--dark-grey);
+    margin: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    overflow-x: scroll;
 }
 
-.author-name {
-    margin: 10px;
+#topics {
+    text-align: start;
+    width: 60%;
 }
 
-.bio {
-    margin: 20px;
+th {
+    border-bottom: 2px solid var(--dark-grey);
+    padding-bottom: 10px;
+    font-size: 1.3rem;
 }
 
-.error-msg {
-    color: var(--light-grey);
+td:not(:first-child) {
+    text-align: center;
 }
 
-.btn {
-    cursor: pointer;
-    width: 200px;
-    margin: 10px;
-    color: var(--main-bg-color);
-    font-size: 14px;
+td {
+    border-bottom: 1px solid var(--dark-grey);
+    padding: 20px 0;
+}
+
+.post-title {
+    font-size: 1.2rem;
+    color: var(--medium-grey);
+    text-decoration: none;
+}
+
+.category {
+    padding: 3px;
+    color: var(--black);
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    margin: 10px 0 10px;
+}
+
+.career {
+    background-color: var(--salmon-color);
+}
+
+.feedback,
+.html-css {
+    background-color: var(--light-blue);
+}
+
+.support {
+    background-color: var(--light-orange);
+}
+
+.general {
+    background-color: var(--light-green);
+}
+
+.javascript {
     background-color: var(--golden-yellow);
-    background-image: linear-gradient(#fecc4c, #ffac33);
-    border-color: var(--golden-yellow);
-    border-width: 3px;
+}
+
+.backend {
+    background-color: var(--gold);
+}
+
+.python {
+    background-color: var(--green);
+}
+
+.motivation {
+    background-color: var(--peach);
+}
+
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.avatar-container img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 750px) {
+    .table-wrapper {
+        padding: 0 15px;
+    }
+
+    table {
+        width: 700px;
+    }
+
+    th {
+        font-size: 1.2rem;
+    }
+
+    .post-title {
+        font-size: 1.1rem;
+    }
 }
