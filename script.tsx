@@ -32,7 +32,10 @@ const forumCategory = (id) => {
     const url = `${forumCategoryUrl}${selectedCategory.className}/${id}`;
     const linkText = selectedCategory.category;
     const linkClass = `category ${selectedCategory.className}`;
-    return `<a href="${url}" class="${linkClass}" target="_blank">${linkText}</a>`;
+
+    return `<a href="${url}" class="${linkClass}" target="_blank">
+    ${linkText}
+  </a>`;
 };
 
 const timeAgo = (time) => {
@@ -99,6 +102,18 @@ const showLatestPosts = (data) => {
     <tr>
       <td>
         <p class="post-title">${title}</p>
+return `
+            <tr>
+            <td>
+            <p class="post-title">${title}</p>
+        ${forumCategory(category_id)}
+    </td>
+        <td></td>
+        <td>${posts_count - 1}</td>
+        <td>${viewCount(views)}</td>
+        <td>${timeAgo(bumped_at)}</td>
+    </tr>
+        `;
       </td>
       <td></td>
       <td>${posts_count - 1}</td>
