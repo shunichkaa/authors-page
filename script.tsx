@@ -71,7 +71,9 @@ const viewCount = (views) => {
 };
 
 const avatars = (posters, users) => {
+    return posters.map((poster) => {
 
+    });
 };
 
 const fetchData = async () => {
