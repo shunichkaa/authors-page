@@ -120,7 +120,10 @@ const showLatestPosts = (data) => {
         ${forumCategory(category_id)}
       </td>
       <td>
-
+<td>
+  <div class="avatar-container">
+  </div>
+</td>
       </td>
       <td>${posts_count - 1}</td>
       <td>${viewCount(views)}</td>
