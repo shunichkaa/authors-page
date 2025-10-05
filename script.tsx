@@ -72,7 +72,7 @@ const viewCount = (views) => {
 
 const avatars = (posters, users) => {
     return posters.map((poster) => {
-
+        const user = users.find((user) => user.id === poster.user_id);
     });
 };
 
